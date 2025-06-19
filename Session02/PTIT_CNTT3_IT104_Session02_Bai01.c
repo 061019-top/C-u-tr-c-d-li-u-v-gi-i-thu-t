@@ -1,29 +1,28 @@
 #include <stdio.h>
 
 int main() {
-    int soPhanTu;
+    int size;
     printf("Nhap so phan tu cua mang: ");
-    scanf("%d", &soPhanTu);
+    scanf("%d", &size);
 
-    if (soPhanTu <= 0 || soPhanTu > 100) {
+    if (size <= 0 || size > 100) {
         printf("So phan tu khong hop le!");
         return 1;
     }
 
-    int mangSoNguyen[soPhanTu];
-    for (int i = 0; i < soPhanTu; i++) {
+    int numbers[size];
+    for (int i = 0; i < size; i++) {
         printf("Phan tu thu %d: ", i + 1);
-        scanf("%d", &mangSoNguyen[i]);
+        scanf("%d", &numbers[i]);
     }
 
-    int giaTriLonNhat = mangSoNguyen[0];
-    for (int i = 1; i < soPhanTu; i++) {
-        if (mangSoNguyen[i] > giaTriLonNhat) {
-            giaTriLonNhat = mangSoNguyen[i];
+    int max = numbers[0];
+    for (int i = 1; i < size; i++) {
+        if (numbers[i] > max) {
+            max = numbers[i];
         }
     }
 
-    printf("Phan tu lon nhat trong mang la: %d\n", giaTriLonNhat);
+    printf("Phan tu lon nhat trong mang la: %d\n", max);
     return 0;
 }
-
