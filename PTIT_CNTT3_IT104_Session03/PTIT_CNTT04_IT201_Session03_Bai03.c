@@ -3,37 +3,42 @@
 
 int main() {
     int n;
-    int *arr;
+    int *a;
 
-    do {
-        printf("Nhap so luong phan tu (0 < n <= 100): ");
-        scanf("%d", &n);
-    } while (n <= 0 || n > 100);
+    printf("Nhap so luong phan tu cua mang (0 < n < 1000): ");
+    scanf("%d", &n);
 
-    arr = (int*)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        printf("Khong the cap phat bo nho.\n");
+    if (n <= 0 || n >= 1000) {
+        printf("Gia tri n khong hop le!\n");
         return 1;
     }
 
-    printf("Nhap cac phan tu cua mang:\n");
+    a = (int *)malloc(n * sizeof(int));
+    if (a == NULL) {
+        printf("Khong the cap phat bo nho\n");
+        return 1;
+    }
+
     for (int i = 0; i < n; i++) {
-        printf("arr[%d] = ", i + 1);
-        scanf("%d", &arr[i]);
+        printf("Nhap phan tu thu %d: ", i + 1);
+        scanf("%d", &a[i]);
     }
 
-    for (int i = 0; i < n / 2; i++) {
-        int temp = arr[i];
-        arr[i] = arr[n - 1 - i];
-        arr[n - 1 - i] = temp;
-    }
-
-    printf("Mang sau khi dao nguoc:\n");
+    int s = 0, c = 0;
     for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+        if (a[i] % 2 != 0) {
+            s += a[i];
+            c++;
+        }
     }
-    printf("\n");
 
-    free(arr);
+    if (c == 0) {
+        printf("Khong co so le nao trong mang!\n");
+    } else {
+        float tb = (float)s / c;
+        printf("Trung binh cong cac so le la: %.2f\n", tb);
+    }
+
+    free(a);
     return 0;
 }

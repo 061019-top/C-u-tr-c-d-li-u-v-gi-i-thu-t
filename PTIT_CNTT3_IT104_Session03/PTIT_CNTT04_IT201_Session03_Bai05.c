@@ -1,48 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int sumMainDiag(int **a, int n) {
+    int s = 0;
+    for (int i = 0; i < n; i++)
+        s += a[i][i];
+    return s;
+}
+
+int sumSecDiag(int **a, int n) {
+    int s = 0;
+    for (int i = 0; i < n; i++)
+        s += a[i][n - i - 1];
+    return s;
+}
+
 int main() {
-    int n;
-    int *arr;
+    int m, n;
+    do {
+        printf("Nhap so hang = ");
+        scanf("%d", &m);
+        if (m <= 0 || m >= 1000)
+            printf("Khong hop le, thu lai\n");
+    } while (m <= 0 || m >= 1000);
 
     do {
-        printf("Nhap so luong phan tu (0 < n <= 100): ");
+        printf("Nhap so cot = ");
         scanf("%d", &n);
-    } while (n <= 0 || n > 100);
+        if (n <= 0 || n >= 1000)
+            printf("Khong hop le, thu lai\n");
+    } while (n <= 0 || n >= 1000);
 
-    arr = (int*)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        printf("Khong the cap phat bo nho.\n");
-        return 1;
+    int **a = malloc(m * sizeof(int *));
+    for (int i = 0; i < m; i++)
+        a[i] = malloc(n * sizeof(int));
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++) {
+            printf("Nhap a[%d][%d]: ", i, j);
+            scanf("%d", &a[i][j]);
+        }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++)
+            printf("%d ", a[i][j]);
+        printf("\n");
     }
 
-    printf("Nhap cac phan tu cua mang:\n");
-    for (int i = 0; i < n; i++) {
-        printf("arr[%d] = ", i);
-        scanf("%d", &arr[i]);
+    if (m == n) {
+        int d1 = sumMainDiag(a, n);
+        int d2 = sumSecDiag(a, n);
+        printf("Tong duong cheo chinh = %d\n", d1);
+        printf("Tong duong cheo phu = %d\n", d2);
+    } else {
+        printf("Khong ton tai duong cheo chinh\n");
+        printf("Khong ton tai duong cheo phu\n");
     }
 
-    int pos;
-    printf("Nhap vi tri muon xoa (0 den %d): ", n - 1);
-    scanf("%d", &pos);
+    for (int i = 0; i < m; i++)
+        free(a[i]);
+    free(a);
 
-    if (pos < 0 || pos >= n) {
-        printf("Vi tri khong hop le.\n");
-        free(arr);
-        return 1;
-    }
-
-    for (int i = pos; i < n - 1; i++) {
-        arr[i] = arr[i + 1];
-    }
-    n--;
-
-    printf("Mang sau khi xoa:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
     return 0;
 }

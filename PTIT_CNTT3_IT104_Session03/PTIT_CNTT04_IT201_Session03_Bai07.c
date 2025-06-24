@@ -1,58 +1,53 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
+int sumRow(int **a, int n, int k) {
+    int s = 0;
+    for (int j = 0; j < n; j++)
+        s += a[k][j];
+    return s;
+}
+
 int main() {
-    int **a = NULL, dong, cot;
-    printf("Nhap vao so dong=");
-    scanf("%d", &dong);
-    printf("Nhap vao so cot=");
-    scanf("%d", &cot);
+    int m, n;
+    do {
+        printf("Nhap so hang: ");
+        scanf("%d", &m);
+        if (m <= 0 || m >= 1000)
+            printf("Khong hop le\n");
+    } while (m <= 0 || m >= 1000);
 
-    if (dong<=0) {
-        printf("Khong hop le\n");
-        return -1;
-    }else if (cot<=0) {
-        printf("Khong hop le\n");
-        return -1;
-    }
-    a = (int **)malloc(dong * sizeof(int *));
-    for (int i = 0; i < dong; i++){
-        a[i] = (int *)malloc(cot * sizeof(int));
-    }
+    do {
+        printf("Nhap so cot: ");
+        scanf("%d", &n);
+        if (n <= 0 || n >= 1000)
+            printf("Khong hop le\n");
+    } while (n <= 0 || n >= 1000);
 
-    for (int i=0;i<dong;i++) {
-        for (int j=0;j<cot;j++) {
-            printf("arr[%d][%d]=:", i, j);
+    int **a = malloc(m * sizeof(int *));
+    for (int i = 0; i < m; i++)
+        a[i] = malloc(n * sizeof(int));
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++) {
+            printf("a[%d][%d] = ", i, j);
             scanf("%d", &a[i][j]);
         }
-    }
 
-    for (int i=0;i<dong;i++) {
-        for (int j=0;j<cot;j++) {
-            printf("arr[%d][%d]=%d \n", i, j,a[i][j]);
-        }
-    }
     int k;
-    int sum=0;
+    printf("Nhap dong k: ");
+    scanf("%d", &k);
 
-    printf("Hang can tinh :");
-    scanf("%d",&k);
-
-    if (k>dong) {
-        printf("Hang can tinh khong ton tai\n");
-        return -1;
+    if (k < 0 || k >= m)
+        printf("Dong khong ton tai\n");
+    else {
+        int s = sumRow(a, n, k);
+        printf("Tong = %d\n", s);
     }
 
-    for (int i=k-1;i<dong;i++) {
-        for (int j=0;j<cot;j++) {
-            sum+=a[i][j];
-        }
-    }
-    printf("Tong cac phan tu cua hang %d la %d",k,sum);
-
-    for (int i = 0; i < dong; i++){
+    for (int i = 0; i < m; i++)
         free(a[i]);
-    }
     free(a);
+
     return 0;
 }

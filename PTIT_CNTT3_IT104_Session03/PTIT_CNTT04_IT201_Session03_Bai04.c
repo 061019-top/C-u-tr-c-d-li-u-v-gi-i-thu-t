@@ -1,48 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MIN_VAL -10000
+#define MAX_VAL 10000
+
 int main() {
-    int n;
-    int *arr;
+    int m, n;
 
     do {
-        printf("Nhap so luong phan tu (0 < n <= 100): ");
+        printf("Nhap so hang = ");
+        scanf("%d", &m);
+        if (m < 0 || m > 100)
+            printf("Khong hop le, thu lai\n");
+    } while (m < 0 || m > 100);
+
+    do {
+        printf("Nhap so cot = ");
         scanf("%d", &n);
-    } while (n <= 0 || n > 100);
+        if (n < 0 || n > 100)
+            printf("Khong hop le, thu lai\n");
+    } while (n < 0 || n > 100);
 
-    arr = (int*)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        printf("Khong the cap phat bo nho.\n");
-        return 1;
+    int **a = malloc(m * sizeof(int *));
+    for (int i = 0; i < m; i++)
+        a[i] = malloc(n * sizeof(int));
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++) {
+            printf("Nhap a[%d][%d] = ", i, j);
+            scanf("%d", &a[i][j]);
+        }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++)
+            printf("%d ", a[i][j]);
+        printf("\n");
     }
 
-    printf("Nhap cac phan tu cua mang:\n");
-    for (int i = 0; i < n; i++) {
-        printf("arr[%d] = ", i);
-        scanf("%d", &arr[i]);
-    }
+    int max = MIN_VAL, min = MAX_VAL;
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++) {
+            if (a[i][j] > max) max = a[i][j];
+            if (a[i][j] < min) min = a[i][j];
+        }
 
-    int pos, newValue;
-    printf("Nhap vi tri muon sua (0 den %d): ", n - 1);
-    scanf("%d", &pos);
+    printf("Max = %d, Min = %d\n", max, min);
 
-    if (pos < 0 || pos >= n) {
-        printf("Vi tri khong hop le.\n");
-        free(arr);
-        return 1;
-    }
+    for (int i = 0; i < m; i++)
+        free(a[i]);
+    free(a);
 
-    printf("Nhap gia tri moi tai vi tri %d: ", pos);
-    scanf("%d", &newValue);
-
-    arr[pos] = newValue;
-
-    printf("Mang sau khi cap nhat:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
     return 0;
 }

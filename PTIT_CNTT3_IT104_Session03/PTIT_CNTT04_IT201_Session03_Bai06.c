@@ -2,52 +2,45 @@
 #include <stdlib.h>
 
 int main() {
-    int n;
-    int *arr;
+    int n, m;
+    printf("Nhap so luong phan tu n: ");
+    scanf("%d", &n);
 
-    do {
-        printf("Nhap so luong phan tu (0 < n <= 100): ");
-        scanf("%d", &n);
-    } while (n <= 0 || n > 100);
-
-    arr = (int*)malloc((n + 1) * sizeof(int));
-    if (arr == NULL) {
-        printf("Khong the cap phat bo nho.\n");
+    if (n <= 0 || n >= 1000) {
+        printf("Khong hop le, thu lai\n");
         return 1;
     }
 
-    printf("Nhap cac phan tu cua mang:\n");
+    int *a = malloc(n * sizeof(int));
     for (int i = 0; i < n; i++) {
-        printf("arr[%d] = ", i);
-        scanf("%d", &arr[i]);
+        printf("Phan tu thu %d: ", i + 1);
+        scanf("%d", &a[i]);
     }
 
-    int pos, value;
-    printf("Nhap vi tri muon them (0 den %d): ", n);
-    scanf("%d", &pos);
-
-    if (pos < 0 || pos > n) {
-        printf("Vi tri khong hop le.\n");
-        free(arr);
-        return 1;
-    }
-
-    printf("Nhap gia tri muon them: ");
-    scanf("%d", &value);
-
-    for (int i = n; i > pos; i--) {
-        arr[i] = arr[i - 1];
-    }
-
-    arr[pos] = value;
-    n++;
-
-    printf("Mang sau khi them phan tu:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
+    for (int i = 0; i < n; i++)
+        printf("%d ", a[i]);
     printf("\n");
 
-    free(arr);
+    printf("Nhap so luong phan tu m: ");
+    scanf("%d", &m);
+
+    int t = n + m;
+    int *b = malloc(t * sizeof(int));
+
+    for (int i = 0; i < n; i++)
+        b[i] = a[i];
+
+    for (int i = n; i < t; i++) {
+        printf("Phan tu thu %d: ", i + 1);
+        scanf("%d", &b[i]);
+    }
+
+    free(a);
+
+    for (int i = 0; i < t; i++)
+        printf("%d ", b[i]);
+    printf("\n");
+
+    free(b);
     return 0;
 }
